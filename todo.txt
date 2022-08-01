@@ -1,0 +1,13 @@
+In a controller, is there a way not to have to specify the method name again in the annotation ?
+
+How to specify a link to a resource that offers searching ? We cannot predefine to searched value.
+For example, this is hardcoding the toto value:
+resource.add(linkTo(methodOn(AdminController.class).search("toto", 0, 10, builder)).withRel("search toto"));
+Same for finding by an id:
+resource.add(linkTo(methodOn(AdminController.class).findById((long) 1, builder)).withRel("findById"));
+And how to show the link to add a resource ?
+
+When to use ResponseEntity and when to use HttpEntity in the controller ?
+
+How to add the adminResourceValidator to the exception handlers in AdminExceptionHandler ?
+And that it does not replace the other existing exceptions.

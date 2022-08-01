@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+	<!-- Resolve the http request parameters to build a PageRequest instance 
+		with the following structure for the request parameters: 
+		page The page you want to retrieve page.
+		size The size of the page you want to retrieve page.
+		sort The property that should be sorted by page.sort.
+		dir The direction that should be used for sorting -->
+	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+	  <property name="customArgumentResolvers">
+	    <list>
+	      <bean class="org.springframework.data.web.PageableArgumentResolver" />
+	    </list>
+	  </property>
+	</bean>
+    
+</beans>

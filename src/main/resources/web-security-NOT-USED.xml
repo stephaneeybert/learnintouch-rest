@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:beans="http://www.springframework.org/schema/beans"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/security 
+        http://www.springframework.org/schema/security/spring-security.xsd
+        http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+ 
+	<!-- A basic browser authentication -->
+<!-- 	<http use-expressions="true"> -->
+<!-- 		<intercept-url pattern="/**" access="isAuthenticated()" /> -->
+<!-- 		<http-basic entry-point-ref="myBasicAuthenticationEntryPoint" /> -->
+<!-- 	</http> -->
+
+	<debug />
+
+	<!-- A REST authentication -->
+	<http use-expressions="true" pattern="/admin/**">
+		<intercept-url pattern="/**" access="hasRole('ROLE_ADMIN')" />
+		<http-basic entry-point-ref="restAuthenticationEntryPoint" />
+		<logout />
+	</http>
+
+	<!-- A form based browser authentication -->
+	<http auto-config="true" use-expressions="true">
+		<intercept-url pattern="/admin/login" access="permitAll" />
+		<intercept-url pattern="/admin/logout" access="permitAll" />
+		<intercept-url pattern="/admin/denied" access="permitAll" />
+		<intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')" />
+		<form-login
+			login-page="/admin/login"
+			default-target-url="/admin/list"
+			authentication-failure-url="/admin/denied?failed=true"
+			always-use-default-target="true" />
+		<logout logout-success-url="/admin/login" />
+		<logout delete-cookies="JSESSIONID" />
+	</http>
+
+	<!-- A custom authentication provider on legacy data -->
+	<authentication-manager>
+        <authentication-provider ref="customAuthenticationProvider" />
+	</authentication-manager>
+
+</beans:beans>
